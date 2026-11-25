@@ -1,6 +1,7 @@
 from TicTacToeAi import DumbAi
 from random import shuffle
 
+# This is the core of the whole program
 
 class TicTacToe(DumbAi):
     """
@@ -53,6 +54,7 @@ class TicTacToe(DumbAi):
         return [user, condition]
 
     def CheckBoard(self, user: int, player: str) -> int:
+        """checks if the place is already taken or not and if place is empty then it fills it"""
 
         if self.board[user] != self.players[0] and self.board[user] != self.players[-1]:
 
@@ -64,12 +66,18 @@ class TicTacToe(DumbAi):
             return 1
 
     def FillBoard(self, user: int, player: str) -> None:
+
+        # Here the player is 'X' or 'O'
         self.board[user] = player
 
     def ChoosePlayer(self, tries: int) -> str:
+        """This function determines the turn each player"""
         return self.players[tries % 2]
 
     def checkWins(self, player: str) -> bool:
+        """This function checks who won the game"""
+
+        # These vars determine who won the game
         checkX = 0
         checkO = 0
 
@@ -95,7 +103,7 @@ class TicTacToe(DumbAi):
         return False
 
     def CheckDraw(self, tries: int, player) -> bool:
-
+        """This function decide if game is over or game is draw"""
         if self.checkWins(player=player):
             print("Gameover!")
             return True
@@ -105,7 +113,10 @@ class TicTacToe(DumbAi):
             return True
 
     def DecideUserVsComputer(self, computer: bool, player: str, dumb: bool) -> str:
+        """This function decide who has the next move."""
 
+        # If use has selected the computer move then we we have two computer options
+        # so we will decide which computer to use depending upon the dumb value
         if computer and player == "O":
 
             if dumb:
@@ -118,30 +129,39 @@ class TicTacToe(DumbAi):
         return user
 
     def MainGameLoop(self, computer: bool = False, dumb=True) -> None:
+        """
+        This is the main game loop
+        """
 
         tries: int = 0
         running: bool = True
 
         while running:
 
+            # Each player have 50% luck to get the first chance
             player: str = self.ChoosePlayer(tries)
             self.PrintBoard()
 
+            # After each move we will check that if someone won or not
             if self.checkWins(player=player) or self.CheckDraw(
                 tries=tries, player=player
             ):
                 running = False
                 continue
 
+            # Now we will get the value of user it may be person or a computer
             user: int = self.DecideUserVsComputer(
                 computer=computer, player=player, dumb=dumb
             )
+
+            # This function checks that if the place is taken or not
             check: int = self.CheckBoard(user=user, player=player)
 
             tries += check - 1
 
     def GetUserInput(self, player: str) -> int:
 
+        # Now this function gets the input from the user
         running: bool = True
         while running:
             try:
@@ -156,52 +176,7 @@ class TicTacToe(DumbAi):
             except KeyboardInterrupt:
                 exit()
 
+        # we will subtract 1 from the user input to get the index in the board
         return userVal[0] - 1
 
 
-# this function is not related to the program. This func is temp for the class testing
-# You can also modify the main menu
-
-
-def Menu() -> None:
-
-    options: str = [
-        "Computer(dumb) (vs) Player",
-        "Computer(Smart) (vs) Player",
-        "Player (vs) Player",
-    ]
-
-    computer = False
-    dump = None
-
-    while True:
-
-        for i in range(len(options)):
-
-            print(f"[{i+1}] {options[i]}")
-
-        option = input("Enter your option: ")
-
-        if option == "1":
-            computer = True
-            dump = True
-        elif option == "2":
-            computer = True
-            dumb = False
-        elif option == "3":
-            computer = False
-        else:
-            print("Invalid option Please try again!")
-            continue
-
-        obj = TicTacToe()
-
-        obj.MainGameLoop(computer=computer, dumb=dump)
-
-        againOption = input("Do you want to play again: (y/n): ")
-
-        if againOption != "y":
-            break
-
-
-Menu()
