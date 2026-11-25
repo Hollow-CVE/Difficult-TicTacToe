@@ -1,50 +1,59 @@
+import argparse
+
 from tictactoe import TicTacToe
 
+MODES = {
+    "1": ("Computer (dumb) vs Player", [True, True]),
+    "2": ("Computer (smart) vs Player", [True, False]),
+    "3": ("Player vs Player", [False, True]),
+}
 
-def print_options() -> None:
-    """Prints all the options in vertical order
 
-    Args:
-        options (list[str]): the list that contains all the options
-    """
+def get_args() -> argparse.Namespace:
+    """Get the command line arguments. If user don't like the interactive menu the user can user this instead."""
 
-    options: list[str] = [
-        "Computer(dumb) (vs) Player",
-        "Computer(Smart) (vs) Player",
-        "Player (vs) Player",
-    ]
+    parser = argparse.ArgumentParser(description="Tic Tac Toe Game")
+    parser.add_argument("-b", "--boring", action="store_true", help="Use the boring board instead of the boring one")
 
-    for index in range(len(options)):
+    group = parser.add_mutually_exclusive_group()  
+    group.add_argument("-d", "--dumb", action="store_const", dest="mode", const="1",
+                       help="Play against the dumb computer")
+    group.add_argument("-s", "--smart", action="store_const", dest="mode", const="2",
+                       help="Play against the smart computer")
+    group.add_argument("-u", "--user", action="store_const", dest="mode", const="3",
+                       help="Play against another user")
+    
 
-        print(f"[{index+1}] {options[index]}")
+    return parser.parse_args()
 
 
 def get_option() -> list[bool]:
-    """Gets the input from the user ranging from 1-3
+    """Ask the user to pick a game mode (1-3) and return [computer, dumb]."""
 
-    Returns:
-        list: the required argument for each mode
-    """
+    for key, (label, _) in MODES.items():
+        print(f"[{key}] {label}")
 
-    options: dict = {
-        "1": [True, True],
-        "2": [True, False],
-        "3": [False, True],
-    }
-    
-    print_options()
-    
-    option = input("Enter your Gamemode:> ")
-    
-    if option in options:
-        return options[option]
-    
+    while True:
+        try:
+            option = input("Enter your Gamemode:> ").strip()
+        except KeyboardInterrupt:
+            exit(0)
+
+        if option in MODES:
+            return MODES[option][1]
+        print("Invalid option, please try again!")
 
 
+def main() -> None:
+    args = get_args()
 
-arguments: bool = get_option()
-computer = arguments[0]
-dumb = arguments[1]
+    if args.mode is not None:
+        computer, dumb = MODES[args.mode][1]
+    else:
+        computer, dumb = get_option()
 
-obj = TicTacToe()
-obj.MainGameLoop(computer=computer, dumb=dumb)
+    TicTacToe().MainGameLoop(computer=computer, dumb=dumb, boring=args.boring)
+
+
+if __name__ == "__main__":
+    main()

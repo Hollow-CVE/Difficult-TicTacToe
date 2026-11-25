@@ -138,7 +138,7 @@ class TicTacToe(DumbAi, GameBoard):
 
         return user
 
-    def MainGameLoop(self, computer: bool = False, dumb=True) -> None:
+    def MainGameLoop(self, computer: bool = False, dumb=True, boring=True) -> None:
         """
         This is the main game loop
         """
@@ -151,9 +151,7 @@ class TicTacToe(DumbAi, GameBoard):
             # Each player have 50% luck to get the first chance
             player: str = self.ChoosePlayer(tries)
             
-            
-            #self.PrintBoard_boring(self.board)
-            self.PrintBoard_rich(self.board) 
+            self.PrintBoard_boring(self.board) if boring else self.PrintBoard_rich(self.board)
             
 
             # After each move we will check that if someone won or not
