@@ -1,9 +1,10 @@
 from TicTacToeAi import DumbAi
 from random import shuffle
+from board import GameBoard
 
 # This is the core of the whole program
 
-class TicTacToe(DumbAi):
+class TicTacToe(DumbAi, GameBoard):
     """
     Simple TicTacToe game with simple multiplayer
     """
@@ -33,15 +34,6 @@ class TicTacToe(DumbAi):
         ]
 
         shuffle(self.players)
-
-    def PrintBoard(self) -> None:
-        """Just prints the boring board"""
-
-        print(f" {self.board[0]}  | {self.board[1]} |  {self.board[2]}")
-        print(f"----|---|----")
-        print(f" {self.board[3]}  | {self.board[4]} |  {self.board[5]}")
-        print(f"----|---|----")
-        print(f" {self.board[6]}  | {self.board[7]} |  {self.board[8]}")
 
     def ChedefckUserInput(self, user: int, player: str) -> list:
         """Just checks is in range or not"""
@@ -140,7 +132,7 @@ class TicTacToe(DumbAi):
 
             # Each player have 50% luck to get the first chance
             player: str = self.ChoosePlayer(tries)
-            self.PrintBoard()
+            self.PrintBoard_boring(self.board)
 
             # After each move we will check that if someone won or not
             if self.checkWins(player=player) or self.CheckDraw(
