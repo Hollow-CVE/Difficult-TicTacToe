@@ -132,7 +132,9 @@ class TicTacToe(DumbAi, GameBoard):
 
             # Each player have 50% luck to get the first chance
             player: str = self.ChoosePlayer(tries)
-            self.PrintBoard_boring(self.board)
+            #self.PrintBoard_boring(self.board)
+            self.PrintBoard_rich(self.board)
+            
 
             # After each move we will check that if someone won or not
             if self.checkWins(player=player) or self.CheckDraw(
