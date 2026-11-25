@@ -18,6 +18,9 @@ class GameBoard():
         print(f"----|---|----")
         print(f" {board[6]}  | {board[7]} |  {board[8]}")
 
+
+
+    # I used help creating this board because i'm not good at designing UIs
     def PrintBoard_rich(self, board: list) -> None:
         """Prints a minimalist board using the rich module"""
 
@@ -28,7 +31,8 @@ class GameBoard():
             show_lines=True,
             box=box.MINIMAL,            
             border_style="grey37",
-            padding=(1, 3),             
+            # you can adjust the padding
+            padding=(1, 3),              
         )
 
         for _ in range(3):
@@ -36,9 +40,9 @@ class GameBoard():
 
         def style_cell(value, index: int) -> Text:
             if value == "X":
-                return Text("X", style="bold #e06c75")
+                return Text("X", style="bold red")
             if value == "O":
-                return Text("O", style="bold #61afef")
+                return Text("O", style="bold blue")
             return Text(str(index + 1), style="grey35")
 
         for row in range(3):
