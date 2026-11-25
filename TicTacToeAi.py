@@ -138,10 +138,10 @@ class DumbAi:
             self.ExtractSignificantList(self.wins, self.board)
         )
         computer: int = self.GetNotDumbComputerNumber(availableTries, bestList)
-        print(f"(Smart-Computer-O) Choosed ({computer+1})")
+    
         return computer
 
     def GetRandomComputerChoice(self, sortedBoard: list) -> int:
         computerChoice = random.choice(sortedBoard)
-        print(f"(Dumb-Computer-O) Choosed ({computerChoice})")
+        
         return computerChoice - 1

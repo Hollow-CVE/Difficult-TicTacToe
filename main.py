@@ -23,31 +23,23 @@ def get_option() -> list[bool]:
     """Gets the input from the user ranging from 1-3
 
     Returns:
-        str: options for mode
+        list: the required argument for each mode
     """
 
+    options: dict = {
+        "1": [True, True],
+        "2": [True, False],
+        "3": [False, True],
+    }
+    
     print_options()
+    
+    option = input("Enter your Gamemode:> ")
+    
+    if option in options:
+        return options[option]
+    
 
-    try:
-        option: str = input("Enter option:> ")
-    except KeyboardInterrupt:
-        exit(0)
-
-    computer = True
-    dumb = True
-
-    if option == "1":
-        return [computer, dumb]
-
-    if option == "2":
-        dumb = False
-    elif option == "3":
-        computer = False
-    else:
-        print("Invalid option Please try again!")
-        exit(0)
-
-    return [computer, dumb]
 
 
 arguments: bool = get_option()

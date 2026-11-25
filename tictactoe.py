@@ -129,8 +129,10 @@ class TicTacToe(DumbAi, GameBoard):
 
             if dumb:
                 user = self.LittleDumbAi(self.board)
+                self.console.print(f"[info](Dumb-Computer-O)[/] Choosed [bold]({user + 1})[/]")
             else:
                 user = self.NotSoDumbAi()
+                self.console.print(f"[info](Smart-Computer-O)[/] Choosed [bold]({user + 1})[/]")
         else:
             user: int = self.GetUserInput(player)
 
