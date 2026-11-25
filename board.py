@@ -8,7 +8,6 @@ class GameBoard():
     '''This class is responsible for the board ui'''
 
 
-    
     def PrintBoard_boring(self, board: list[int]) -> None:
         """Just prints the boring board"""
 
@@ -20,9 +19,10 @@ class GameBoard():
 
 
 
-    # I used help creating this board because i'm not good at designing UIs
+    # ngl I used help to create this board because i'm not good at designing UIs especially terminal UI
     def PrintBoard_rich(self, board: list) -> None:
-        """Prints a minimalist board using the rich module"""
+        """This one is a more fancier version of the board. this is also the default board of the game"""
+        
 
         console = Console()
 
