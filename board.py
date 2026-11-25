@@ -7,6 +7,8 @@ from rich.text import Text
 class GameBoard():
     '''This class is responsible for the board ui'''
 
+
+    
     def PrintBoard_boring(self, board: list[int]) -> None:
         """Just prints the boring board"""
 
@@ -46,3 +48,7 @@ class GameBoard():
         console.print()
         console.print(table, justify="center")
         console.print()
+        
+        
+        
+    

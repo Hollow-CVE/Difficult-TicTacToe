@@ -2,6 +2,7 @@ from TicTacToeAi import DumbAi
 from random import shuffle
 from board import GameBoard
 
+
 # This is the core of the whole program
 
 class TicTacToe(DumbAi, GameBoard):
@@ -132,8 +133,10 @@ class TicTacToe(DumbAi, GameBoard):
 
             # Each player have 50% luck to get the first chance
             player: str = self.ChoosePlayer(tries)
+            
+            
             #self.PrintBoard_boring(self.board)
-            self.PrintBoard_rich(self.board)
+            self.PrintBoard_rich(self.board) 
             
 
             # After each move we will check that if someone won or not
@@ -160,6 +163,7 @@ class TicTacToe(DumbAi, GameBoard):
         while running:
             try:
                 user = int(input(f"(Player-{player}) Enter your value (1-9): "))
+                
                 userVal = self.ChedefckUserInput(user=user, player=player)
 
                 running = userVal[-1]
