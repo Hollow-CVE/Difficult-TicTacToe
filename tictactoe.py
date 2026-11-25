@@ -2,6 +2,9 @@ from TicTacToeAi import DumbAi
 from random import shuffle
 from board import GameBoard
 
+# some ui stuff
+from rich.console import Console
+from rich.theme import Theme
 
 # This is the core of the whole program
 
@@ -18,6 +21,12 @@ class TicTacToe(DumbAi, GameBoard):
 
         # We have two players which are X and O
         self.players: list[str] = ["O", "X"]
+        
+        
+        # theme for text
+        self.theme = Theme({"info": "green", "danger": "bold red"})
+        
+        self.console = Console(theme=self.theme)
 
         # this is the self.win list that it have two uses
         # the first use of this list is to check if someone won or not
@@ -42,7 +51,9 @@ class TicTacToe(DumbAi, GameBoard):
         if user <= 9 and user >= 1:
             condition = False
         else:
-            print("Invalid value! Value should be between 1-9")
+            
+            self.console.print("Invalid value! Value should be between 1-9", style="danger")
+            
 
         return [user, condition]
 
@@ -55,7 +66,8 @@ class TicTacToe(DumbAi, GameBoard):
             return 0
 
         else:
-            print("Place is already taken!")
+
+            self.console.print("Place is already taken!", style="danger")
             return 1
 
     def FillBoard(self, user: int, player: str) -> None:
@@ -90,7 +102,8 @@ class TicTacToe(DumbAi, GameBoard):
 
             if checkX >= 3 or checkO >= 3:
                 displayedPlayer = "X" if player == "O" else "O"
-                print(f"Player-{displayedPlayer} Won the game!")
+                
+                self.console.print(f"Player-{displayedPlayer} Won the game!", style="info")
                 return True
 
         return False
@@ -98,11 +111,13 @@ class TicTacToe(DumbAi, GameBoard):
     def CheckDraw(self, tries: int, player) -> bool:
         """This function decide if game is over or game is draw"""
         if self.checkWins(player=player):
-            print("Gameover!")
+            
+            self.console.print("GameOver!", style="info")
             return True
 
         if tries == -9:
-            print("Result: Draw")
+            
+            self.console.print("Result: Draw", style="info")
             return True
 
     def DecideUserVsComputer(self, computer: bool, player: str, dumb: bool) -> str:
@@ -162,14 +177,14 @@ class TicTacToe(DumbAi, GameBoard):
         running: bool = True
         while running:
             try:
-                user = int(input(f"(Player-{player}) Enter your value (1-9): "))
+                user = int(self.console.input(f"[info]Player-{player}[/] [muted]Enter your value (1-9):[/] "))
                 
                 userVal = self.ChedefckUserInput(user=user, player=player)
 
                 running = userVal[-1]
 
             except ValueError:
-                print("Invalid input! Please enter an integer ranging between 1-9")
+                self.console.print("Invalid input! Please enter an integer ranging between 1-9", style="danger")
 
             except KeyboardInterrupt:
                 exit()
