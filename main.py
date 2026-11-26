@@ -22,6 +22,13 @@ def get_args() -> argparse.Namespace:
         action="store_true",
         help="Use the boring board instead of the boring one",
     )
+    
+    parser.add_argument(
+            "-c",
+            "--corner",
+            action="store_true",
+            help="don't let the smart computer to always select the center of the board",
+        )
 
     group = parser.add_mutually_exclusive_group()
 
@@ -84,7 +91,7 @@ def main() -> None:
     else:
         computer, dumb = get_option()
 
-    TicTacToe().MainGameLoop(computer=computer, dumb=dumb, boring=args.boring)
+    TicTacToe().MainGameLoop(computer=computer, dumb=dumb, boring=args.boring, corner=args.corner)
 
 
 if __name__ == "__main__":

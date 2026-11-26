@@ -120,7 +120,7 @@ class TicTacToe(DumbAi, GameBoard):
             self.console.print("Result: Draw", style="info")
             return True
 
-    def DecideUserVsComputer(self, computer: bool, player: str, dumb: bool) -> str:
+    def DecideUserVsComputer(self, computer: bool, player: str, dumb: bool, corner: bool) -> str:
         """This function decide who has the next move."""
 
         # If use has selected the computer move then we we have two computer options
@@ -131,14 +131,14 @@ class TicTacToe(DumbAi, GameBoard):
                 user = self.LittleDumbAi(self.board)
                 self.console.print(f"[info](Dumb-Computer-O)[/] Choosed [bold]({user + 1})[/]")
             else:
-                user = self.NotSoDumbAi()
+                user = self.NotSoDumbAi(corner)
                 self.console.print(f"[info](Smart-Computer-O)[/] Choosed [bold]({user + 1})[/]")
         else:
             user: int = self.GetUserInput(player)
 
         return user
 
-    def MainGameLoop(self, computer: bool = False, dumb=True, boring=True) -> None:
+    def MainGameLoop(self, computer: bool = False, dumb=True, boring=True, corner: bool = False) -> None:
         """
         This is the main game loop
         """
@@ -163,7 +163,7 @@ class TicTacToe(DumbAi, GameBoard):
 
             # Now we will get the value of user it may be person or a computer
             user: int = self.DecideUserVsComputer(
-                computer=computer, player=player, dumb=dumb
+                computer=computer, player=player, dumb=dumb, corner=corner
             )
 
             # This function checks that if the place is taken or not

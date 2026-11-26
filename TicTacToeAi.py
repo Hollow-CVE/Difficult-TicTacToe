@@ -100,7 +100,7 @@ class DumbAi:
 
         return bestlist
 
-    def GetNotDumbComputerNumber(self, availableTries: list[int], bestlist: list[int]):
+    def GetNotDumbComputerNumber(self, availableTries: list[int], bestlist: list[int], corner: bool = False):
         """Picks the best move from the bestlist"""
 
         bestlistssingular: list[int] = bestlist[0]
@@ -113,12 +113,13 @@ class DumbAi:
             if values in bestlistssingular:
                 probableValues.append(values)
 
-        if len(probableValues) == 5:
-            return 4
+        if not corner:
+            if len(probableValues) == 5:
+                return 4
 
-        if len(probableValues) == 4 and 4 in probableValues:
-            return 4
-
+            if len(probableValues) == 4 and 4 in probableValues:
+                return 4
+        print(probableValues, availableTries[0] - 1)
         if len(probableValues) == 0:
             return availableTries[0] - 1
         return random.choice(probableValues)
@@ -130,14 +131,14 @@ class DumbAi:
         computer: int = self.GetRandomComputerChoice(computerChoices)
         return computer
 
-    def NotSoDumbAi(self) -> int:
+    def NotSoDumbAi(self, corner: bool = False) -> int:
         """returns the move of smart ai"""
 
         availableTries: list[int] = self.GetAvailableValues(board=self.board)
         bestList: list[int] = self.GetBestSignificant(
             self.ExtractSignificantList(self.wins, self.board)
         )
-        computer: int = self.GetNotDumbComputerNumber(availableTries, bestList)
+        computer: int = self.GetNotDumbComputerNumber(availableTries, bestList, corner)
     
         return computer
 
